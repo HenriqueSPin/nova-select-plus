@@ -13,8 +13,8 @@
           :selectable="selectable"
           :filterable="filterable"
           @search="handleSearch"
-          @option:selected="$emit('field-changed')"
-          @option:deselected="$emit('field-changed')"
+          @option:selected="handleChange"
+          @option:deselected="handleChange"
           append-to-body
           :calculate-position="vueSelectCalculatePosition"
         >
@@ -181,6 +181,11 @@ export default {
       }
 
       return this.selected.length < this.currentField['maxSelections']
+    },
+
+    handleChange() {
+      this.emitFieldValueChange(this.fieldAttribute, this.selected);
+      this.$emit("field-changed");
     },
 
     handleSearch: debounce(function (search, loading) {
